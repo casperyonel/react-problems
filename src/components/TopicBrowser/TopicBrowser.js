@@ -8,7 +8,7 @@ import React from 'react'
 
 const TopicBrowser = () => {
     return (
-        <div>
+        <div className="puzzleFeed">
             <EvenAndOdd />
             <FilterObject />
             <FilterString />
