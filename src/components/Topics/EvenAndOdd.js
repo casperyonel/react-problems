@@ -1,37 +1,46 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { Component } from 'react';
 
+export default class EvenAndOdd extends Component {
 
-const EvenAndOdd = () => {
+  constructor() {
+    super();
 
-    const [evenArr, setEvenArr] = useState([])
-    const [oddArr, setOddArr] = useState([])
-    const [userInput, setUserInput] = useState('')
+    this.state = {
+      evenArray: [],
+      oddArray: [],
+      userInput: ''
+    }
+  }
 
-    function splitArray(string) {
-        // let evenAry = []
-        // let oddAry = []=
-        let splitArr = string.split('')
-        setEvenArr(splitArr.filter(elem => elem % 2 === 0 && elem != " " ))
-        setOddArr(splitArr.filter(elem => elem % 2 !== 0 && elem != "," ))
-        console.log('hi')
+  handleChange(val) {
+    this.setState({ userInput: val });
+  }
+
+  assignEvenAndOdds(userInput) {
+    var arr = userInput.split(',');
+    var evens = [];
+    var odds = [];
+
+    for ( var i = 0; i < arr.length; i++ ) {
+      if ( arr[i] % 2 === 0 ) {
+        evens.push( parseInt(arr[i], 10) );
+      } else {
+        odds.push( parseInt(arr[i], 10) );
       }
+    }
+    
+    this.setState({ evenArray: evens, oddArray: odds });
+  }
 
+  render() {
     return (
-        <div>
- 
-            <div className='puzzleBox evenAndOddPB'></div>
-
-            <h4>Evens and Odds</h4>
-
-            <input className='inputLine' type="text" onChange={(e) => setUserInput(e.target.value)} />
-            <button className='confirmationButton' onClick={splitArray(userInput)}></button>
-
-            <span className='resultsBox'>{evenArr}</span>
-            <span className='resultsBox'>{oddArr}</span>
-
-        </div>
+      <div className="puzzleBox evenAndOddPB">
+        <h4> Evens and Odds </h4>
+        <input className="inputLine" onChange={ (e) => this.handleChange(e.target.value) }></input>
+        <button className="confirmationButton" onClick={ () => { this.assignEvenAndOdds(this.state.userInput) }}> Split </button>
+        <span className="resultsBox"> Evens: { JSON.stringify(this.state.evenArray) } </span>
+        <span className="resultsBox"> Odds: { JSON.stringify(this.state.oddArray) } </span>
+      </div>
     )
+  }
 }
-
-export default EvenAndOdd
